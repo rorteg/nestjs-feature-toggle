@@ -17,9 +17,8 @@ import { FeatureToggleExpressMiddleware } from '.';
     },
     inject: [FeatureToggleService]
   }],
-  exports:[FeatureToggleService, FeatureToggleExpressMiddleware]
+  exports:[FeatureToggleService]
 })
-  
 export class FeatureToggleModule {
   static register(options: FeatureToggleModuleOptions): DynamicModule {
     return {
@@ -47,6 +46,13 @@ export class FeatureToggleModule {
       {
         provide: options.useClass,
         useClass: options.useClass
+      },
+      {
+        provide: FeatureToggleExpressMiddleware,
+        useFactory: (featureToggleService: FeatureToggleService) => {
+          return new FeatureToggleExpressMiddleware(featureToggleService);
+        },
+        inject: [FeatureToggleService]
       }
     ];
   }
