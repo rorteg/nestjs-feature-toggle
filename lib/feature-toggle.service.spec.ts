@@ -11,7 +11,7 @@ const setup = async (config: FeatureToggleModuleOptions) => {
     imports: [FeatureToggleModule.register(config)]
   }).compile();
 
-  return module.get<FeatureToggleService>(FeatureToggleService);
+  return module.resolve<FeatureToggleService>(FeatureToggleService);
 };
 
 const config: FeatureToggleModuleOptions = {

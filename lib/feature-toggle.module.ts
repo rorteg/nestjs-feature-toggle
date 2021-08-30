@@ -10,9 +10,16 @@ import { FEATURE_TOGGLE_MODULE_OPTIONS } from './feature-toggle.constants';
 import { FeatureToggleExpressMiddleware } from '.';
 
 @Module({
-  providers: [FeatureToggleService],
+  providers: [FeatureToggleService, {
+    provide: FeatureToggleExpressMiddleware,
+    useFactory: (FeatureToggleService: FeatureToggleService) => {
+      return new FeatureToggleExpressMiddleware(FeatureToggleService);
+    },
+    inject: [FeatureToggleService]
+  }],
   exports:[FeatureToggleService, FeatureToggleExpressMiddleware]
 })
+  
 export class FeatureToggleModule {
   static register(options: FeatureToggleModuleOptions): DynamicModule {
     return {
