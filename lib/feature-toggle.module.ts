@@ -7,10 +7,11 @@ import {
 import { FeatureToggleService } from './feature-toggle.service';
 import { createFeatureToggleProvider } from './feature-toggle.providers';
 import { FEATURE_TOGGLE_MODULE_OPTIONS } from './feature-toggle.constants';
+import { FeatureToggleExpressMiddleware } from '.';
 
 @Module({
   providers: [FeatureToggleService],
-  exports:[FeatureToggleService]
+  exports:[FeatureToggleService, FeatureToggleExpressMiddleware]
 })
 export class FeatureToggleModule {
   static register(options: FeatureToggleModuleOptions): DynamicModule {
