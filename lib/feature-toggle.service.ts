@@ -1,13 +1,13 @@
-import { Inject, Injectable, Logger } from "@nestjs/common";
+import { Inject, Injectable, Logger, Scope } from "@nestjs/common";
 import { FeatureEntity } from "./entities/FeatureEntity";
 import { FEATURE_TOGGLE_MODULE_OPTIONS } from "./feature-toggle.constants";
 import { FeatureToggleRepository } from "./feature-toggle.repository";
-import { dataSourceEnum, FeatureToggleModuleOptions } from "./interfaces";
+import { FeatureToggleModuleOptions } from "./interfaces";
 import { FeatureToggleRepositoryInterface } from "./interfaces/feature-toggle.repository.interface";
 import FeatureToggleServiceInterface from "./interfaces/feature-toggle.service.interface";
 import FeatureInterface from "./interfaces/feature.interface";
 
-@Injectable()
+@Injectable({scope: Scope.REQUEST})
 export class FeatureToggleService implements FeatureToggleServiceInterface {
   private readonly logger = new Logger('FeatureToggleService');
   private features: FeatureInterface[] | null;

@@ -1,7 +1,7 @@
 import { Injectable, Logger } from "@nestjs/common";
 import { FeatureEntity } from "./entities/FeatureEntity";
 import { FeatureToggleDataSourceFactory } from "./feature-toogle.data-source.factory";
-import { FeatureToggleModuleOptions } from "./interfaces";
+import { FeatureConfigInterface, FeatureToggleModuleOptions } from "./interfaces";
 import { FeatureToggleDataSourceInterface } from "./interfaces/feature-toggle.datasource.interface";
 import { FeatureToggleRepositoryInterface } from "./interfaces/feature-toggle.repository.interface";
 import FeatureInterface from "./interfaces/feature.interface";
@@ -20,7 +20,6 @@ export class FeatureToggleRepository implements FeatureToggleRepositoryInterface
       .create(this.options.dataSource);
   }
   
-
   async getFeatures(): Promise<FeatureInterface[]> | null {
     let features = await this.dataSource.getFeatures();
 
@@ -29,9 +28,14 @@ export class FeatureToggleRepository implements FeatureToggleRepositoryInterface
     }
 
     return features.map((featureData) => {
+      const featureAdditionalSettings = this.options?.featureSettings ? this.options.featureSettings.filter((feat) => {
+        return feat.name == featureData.name;
+      })[0] : null;
+
       return (new FeatureEntity())
         .setName(featureData.name)
-        .setValue(featureData.value);
+        .setValue(featureData.value)
+        .setAcceptHTTPRequestContext(featureAdditionalSettings?.acceptHttpRequestContext ?? false);
     }) as FeatureInterface[];
   }
 
