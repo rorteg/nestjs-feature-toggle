@@ -1,7 +1,6 @@
-interface Feature {
+interface FeatureInterface {
   isEnabled(): boolean;
-  setAcceptHTTPRequestContext(acceptHTTPRequestContext: boolean): Feature;
   isAcceptHTTPRequestContext(): boolean;
 }
 
-export default Feature;
+export default FeatureInterface;
