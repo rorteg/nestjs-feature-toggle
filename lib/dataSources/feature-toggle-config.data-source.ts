@@ -9,12 +9,12 @@ export class FeatureToggleConfigDataSource implements FeatureToggleDataSourceInt
   }
 
   async getFeatures(): Promise<{ name: string; value: boolean; }[]> {
-    const featureData: { name: string; value: boolean; }[] = this.options.featureSettings.map((featureData) => {
+    const featureData: { name: string; value: boolean; }[] = this.options.featureSettings?.map((featureData) => {
       return {
         name: featureData.name,
         value: featureData.value
       }
-    });
+    }) || [];
 
     return await new Promise(resolve => resolve(featureData));
   }

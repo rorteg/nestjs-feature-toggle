@@ -1,4 +1,4 @@
-import { DynamicModule, Module, Provider } from '@nestjs/common';
+import { DynamicModule, Module, Provider, Scope } from '@nestjs/common';
 import {
   FeatureToggleModuleAsyncOptions,
   FeatureToggleModuleOptions,
@@ -45,13 +45,15 @@ export class FeatureToggleModule {
       this.createAsyncOptionsProvider(options),
       {
         provide: options.useClass,
-        useClass: options.useClass
+        useClass: options.useClass,
+        scope: Scope.REQUEST
       },
       {
         provide: FeatureToggleExpressMiddleware,
         useFactory: (featureToggleService: FeatureToggleService) => {
           return new FeatureToggleExpressMiddleware(featureToggleService);
         },
+        scope: Scope.REQUEST,
         inject: [FeatureToggleService]
       }
     ];
@@ -64,14 +66,16 @@ export class FeatureToggleModule {
       return {
         provide: FEATURE_TOGGLE_MODULE_OPTIONS,
         useFactory: options.useFactory,
-        inject: options.inject || []
+        inject: options.inject || [],
+        scope: Scope.REQUEST
       };
     }
     return {
       provide: FEATURE_TOGGLE_MODULE_OPTIONS,
       useFactory: async (optionsFactory: FeatureToggleOptionsFactory) =>
         await optionsFactory.createFeatureTogglesOptions(),
-      inject: [options.useExisting || options.useClass]
+      inject: [options.useExisting || options.useClass],
+      scope: Scope.REQUEST
     };
   }
 }
