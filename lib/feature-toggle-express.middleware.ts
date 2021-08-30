@@ -1,13 +1,12 @@
-import { Inject, Injectable, NestMiddleware } from "@nestjs/common";
+import { Injectable, NestMiddleware } from "@nestjs/common";
 import { Request, Response, NextFunction } from 'express';
 import { FeatureEntity } from "./entities/FeatureEntity";
 import FeatureToggleServiceInterface from "./interfaces/feature-toggle.service.interface";
 
 @Injectable()
 export class FeatureToggleExpressMiddleware implements NestMiddleware {
-  constructor(
-    @Inject('FeatureToggleService') private readonly FeatureToggleService: FeatureToggleServiceInterface
-  ) { }
+  constructor(private readonly FeatureToggleService: FeatureToggleServiceInterface)
+  {}
   
   async use(req: Request, res: Response, next: NextFunction) {
     Object.keys(req.headers)
