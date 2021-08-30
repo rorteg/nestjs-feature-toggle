@@ -1,6 +1,6 @@
 {
-  "name": "@rorteg/nestjs-feature-toggle",
-  "version": "1.0.3",
+  "name": "@rafaelortegabueno/nestjs-feature-toggle",
+  "version": "1.0.4",
   "description": "Nest - modern, fast, powerful node.js web framework (@jwt)",
   "author": "Rafael Ortega Bueno",
   "license": "MIT",
