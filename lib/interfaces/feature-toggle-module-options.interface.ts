@@ -2,7 +2,7 @@ import { ModuleMetadata, Type } from "@nestjs/common";
 
 export interface FeatureConfigInterface {
   name: string,
-  value: boolean;
+  value?: boolean;
   acceptHttpRequestContext?: boolean;
 }
 
