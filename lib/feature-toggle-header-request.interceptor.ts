@@ -15,10 +15,7 @@ export class FeatureToggleHeaderRequestInterceptor implements NestInterceptor {
     context: ExecutionContext,
     next: CallHandler
   ): Promise<Observable<any>> {
-    if (
-      !this.featureToggleService.getHttpContextConfig()
-        ?.acceptHttpRequestContext
-    ) {
+    if (!this.featureToggleService.getHttpContextConfig()?.enabled) {
       return next.handle();
     }
 

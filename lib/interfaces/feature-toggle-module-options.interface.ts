@@ -12,7 +12,7 @@ export enum DataSourceEnum {
 
 export interface HttpRequestContext {
   keywordToBeSearchedInHeader?: string;
-  acceptHttpRequestContext?: boolean;
+  enabled?: boolean;
 }
 
 export interface FeatureToggleModuleOptions {

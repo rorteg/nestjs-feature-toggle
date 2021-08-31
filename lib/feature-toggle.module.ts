@@ -7,19 +7,11 @@ import {
 import { FeatureToggleService } from './feature-toggle.service';
 import { createFeatureToggleProvider } from './feature-toggle.providers';
 import { FEATURE_TOGGLE_MODULE_OPTIONS } from './feature-toggle.constants';
-import { FeatureToggleExpressMiddleware } from '.';
 import { FeatureToggleHeaderRequestInterceptor } from './feature-toggle-header-request.interceptor';
 
 @Module({
   providers: [
     FeatureToggleService,
-    {
-      provide: FeatureToggleExpressMiddleware,
-      useFactory: (FeatureToggleService: FeatureToggleService) => {
-        return new FeatureToggleExpressMiddleware(FeatureToggleService);
-      },
-      inject: [FeatureToggleService]
-    },
     {
       provide: 'APP_INTERCEPTOR',
       scope: Scope.REQUEST,
@@ -58,14 +50,6 @@ export class FeatureToggleModule {
         provide: options.useClass,
         useClass: options.useClass,
         scope: Scope.REQUEST
-      },
-      {
-        provide: FeatureToggleExpressMiddleware,
-        useFactory: (featureToggleService: FeatureToggleService) => {
-          return new FeatureToggleExpressMiddleware(featureToggleService);
-        },
-        scope: Scope.REQUEST,
-        inject: [FeatureToggleService]
       }
     ];
   }
