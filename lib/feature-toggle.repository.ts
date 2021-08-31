@@ -1,8 +1,8 @@
 import { Injectable, Logger } from "@nestjs/common";
 import { FeatureEntity } from "./entities/FeatureEntity";
 import { FeatureToggleDataSourceFactory } from "./feature-toogle.data-source.factory";
-import { FeatureConfigInterface, FeatureToggleModuleOptions } from "./interfaces";
-import { FeatureToggleDataSourceInterface } from "./interfaces/feature-toggle.datasource.interface";
+import { FeatureToggleModuleOptions } from "./interfaces";
+import { FeatureToggleDataSourceInterface } from "./interfaces/feature-toggle.data-source.interface";
 import { FeatureToggleRepositoryInterface } from "./interfaces/feature-toggle.repository.interface";
 import FeatureInterface from "./interfaces/feature.interface";
 

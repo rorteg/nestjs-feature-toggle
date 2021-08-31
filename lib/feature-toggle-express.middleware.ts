@@ -5,18 +5,24 @@ import FeatureToggleServiceInterface from "./interfaces/feature-toggle.service.i
 
 @Injectable()
 export class FeatureToggleExpressMiddleware implements NestMiddleware {
-  constructor(private readonly FeatureToggleService: FeatureToggleServiceInterface)
+  constructor(private readonly featureToggleService: FeatureToggleServiceInterface)
   {}
   
   async use(req: Request, res: Response, next: NextFunction) {
     Object.keys(req.headers)
-      .filter(key => key.includes('FEATURE_'))
+      .filter((key) => key.includes('feature_'))
       .forEach(async (key) => {
-        const feature = await this.FeatureToggleService.getFeature(key) as FeatureEntity;
+        const feature = (await this.featureToggleService.getFeature(
+          key.toUpperCase(),
+        )) as FeatureEntity;
 
-        if (!feature) {
-          feature.setValue((req.headers[key] === '1' || req.headers[key] === 'true'));
+        if (
+          typeof feature !== 'undefined' &&
+          feature.isAcceptHTTPRequestContext()
+        ) {
+          feature.setValue(!!parseInt(req.headers[key] as string));
         }
       });
+    next();
   }
 }

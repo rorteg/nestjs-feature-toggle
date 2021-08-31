@@ -1,6 +1,6 @@
 import { Test } from '@nestjs/testing';
 import {
-  dataSourceEnum,
+  DataSourceEnum,
   FeatureToggleModuleOptions
 } from './interfaces/feature-toggle-module-options.interface';
 import { FeatureToggleModule } from './feature-toggle.module';
@@ -15,7 +15,7 @@ const setup = async (config: FeatureToggleModuleOptions) => {
 };
 
 const config: FeatureToggleModuleOptions = {
-  dataSource: dataSourceEnum.MODULE_CONFIG,
+  dataSource: DataSourceEnum.MODULE_CONFIG,
   featureSettings: [
     {
       name: 'TEST',

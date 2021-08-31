@@ -1,5 +1,5 @@
 import { FeatureToggleModuleOptions } from "../interfaces";
-import { FeatureToggleDataSourceInterface } from "../interfaces/feature-toggle.datasource.interface";
+import { FeatureToggleDataSourceInterface } from "../interfaces/feature-toggle.data-source.interface";
 
 export class FeatureToggleConfigDataSource implements FeatureToggleDataSourceInterface {
   private options: FeatureToggleModuleOptions;

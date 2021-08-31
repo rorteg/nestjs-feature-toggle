@@ -6,12 +6,17 @@ export interface FeatureConfigInterface {
   acceptHttpRequestContext?: boolean;
 }
 
-export enum dataSourceEnum {
+export enum DataSourceEnum {
   MODULE_CONFIG = 'MODULE_CONFIG'
 }
 
+export interface HttpRequestContext {
+  keywordToBeSearchedInHeader?: string;
+}
+
 export interface FeatureToggleModuleOptions {
-  dataSource?: dataSourceEnum;
+  dataSource?: DataSourceEnum;
+  httpRequestContext?: HttpRequestContext;
   featureSettings?: FeatureConfigInterface[];
 }
 
