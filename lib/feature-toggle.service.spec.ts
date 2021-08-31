@@ -16,6 +16,9 @@ const setup = async (config: FeatureToggleModuleOptions) => {
 
 const config: FeatureToggleModuleOptions = {
   dataSource: DataSourceEnum.MODULE_CONFIG,
+  httpRequestContext: {
+    keywordToBeSearchedInHeader: 'feature_'
+  },
   featureSettings: [
     {
       name: 'TEST',
@@ -26,7 +29,7 @@ const config: FeatureToggleModuleOptions = {
       value: false
     }
   ]
- };
+};
 
 describe('Feature Toggle Service', () => {
   describe('If the feature is not configured, it should not throw exceptions', () => {
@@ -38,7 +41,7 @@ describe('Feature Toggle Service', () => {
     it('', async () => {
       let feature = await featureToggleService.getFeature('NOT_EXISTS');
       expect(feature).toBeUndefined();
-     });
+    });
   });
 
   describe('Should not use Http request context', () => {
@@ -48,13 +51,23 @@ describe('Feature Toggle Service', () => {
     });
 
     it('Should check if a feature is enabled by the configuration', async () => {
-      let feature = await featureToggleService.getFeature(config.featureSettings[0].name);
+      let feature = await featureToggleService.getFeature(
+        config.featureSettings[0].name
+      );
       expect(feature.isEnabled()).toBe(config.featureSettings[0].value);
     });
 
     it('Should check if a feature is not enabled by the configuration', async () => {
-      let feature = await featureToggleService.getFeature(config.featureSettings[1].name);
+      let feature = await featureToggleService.getFeature(
+        config.featureSettings[1].name
+      );
       expect(feature.isEnabled()).toBe(config.featureSettings[1].value);
+    });
+
+    it('Should return the value of HttpRequestContext settings', () => {
+      expect(
+        featureToggleService.getHttpContextConfig()?.keywordToBeSearchedInHeader
+      ).toBe(config.httpRequestContext.keywordToBeSearchedInHeader);
     });
   });
 });
