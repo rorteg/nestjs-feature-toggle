@@ -8,26 +8,37 @@ import { FeatureToggleService } from './feature-toggle.service';
 import { createFeatureToggleProvider } from './feature-toggle.providers';
 import { FEATURE_TOGGLE_MODULE_OPTIONS } from './feature-toggle.constants';
 import { FeatureToggleExpressMiddleware } from '.';
+import { FeatureToggleHeaderRequestInterceptor } from './feature-toggle-header-request.interceptor';
 
 @Module({
-  providers: [FeatureToggleService, {
-    provide: FeatureToggleExpressMiddleware,
-    useFactory: (FeatureToggleService: FeatureToggleService) => {
-      return new FeatureToggleExpressMiddleware(FeatureToggleService);
+  providers: [
+    FeatureToggleService,
+    {
+      provide: FeatureToggleExpressMiddleware,
+      useFactory: (FeatureToggleService: FeatureToggleService) => {
+        return new FeatureToggleExpressMiddleware(FeatureToggleService);
+      },
+      inject: [FeatureToggleService]
     },
-    inject: [FeatureToggleService]
-  }],
-  exports:[FeatureToggleService]
+    {
+      provide: 'APP_INTERCEPTOR',
+      scope: Scope.REQUEST,
+      useClass: FeatureToggleHeaderRequestInterceptor
+    }
+  ],
+  exports: [FeatureToggleService]
 })
 export class FeatureToggleModule {
   static register(options: FeatureToggleModuleOptions): DynamicModule {
     return {
       module: FeatureToggleModule,
       providers: createFeatureToggleProvider(options)
-    }
+    };
   }
 
-  static registerAsync(options: FeatureToggleModuleAsyncOptions): DynamicModule {
+  static registerAsync(
+    options: FeatureToggleModuleAsyncOptions
+  ): DynamicModule {
     return {
       module: FeatureToggleModule,
       imports: options.imports || [],
