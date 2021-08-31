@@ -15,6 +15,13 @@ export class FeatureToggleHeaderRequestInterceptor implements NestInterceptor {
     context: ExecutionContext,
     next: CallHandler
   ): Promise<Observable<any>> {
+    if (
+      !this.featureToggleService.getHttpContextConfig()
+        ?.acceptHttpRequestContext
+    ) {
+      return next.handle();
+    }
+
     const headers = context.switchToHttp().getRequest().headers;
     Object.keys(headers)
       .filter((key) =>

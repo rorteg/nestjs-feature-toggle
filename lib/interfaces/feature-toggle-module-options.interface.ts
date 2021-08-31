@@ -1,7 +1,7 @@
-import { ModuleMetadata, Type } from "@nestjs/common";
+import { ModuleMetadata, Type } from '@nestjs/common';
 
 export interface FeatureConfigInterface {
-  name: string,
+  name: string;
   value?: boolean;
   acceptHttpRequestContext?: boolean;
 }
@@ -12,6 +12,7 @@ export enum DataSourceEnum {
 
 export interface HttpRequestContext {
   keywordToBeSearchedInHeader?: string;
+  acceptHttpRequestContext?: boolean;
 }
 
 export interface FeatureToggleModuleOptions {
@@ -21,12 +22,17 @@ export interface FeatureToggleModuleOptions {
 }
 
 export interface FeatureToggleOptionsFactory {
-  createFeatureTogglesOptions(): Promise<FeatureToggleModuleOptions> | FeatureToggleModuleOptions;
+  createFeatureTogglesOptions():
+    | Promise<FeatureToggleModuleOptions>
+    | FeatureToggleModuleOptions;
 }
 
-export interface FeatureToggleModuleAsyncOptions extends Pick<ModuleMetadata, 'imports'> {
+export interface FeatureToggleModuleAsyncOptions
+  extends Pick<ModuleMetadata, 'imports'> {
   useExisting?: Type<FeatureToggleOptionsFactory>;
   useClass?: Type<FeatureToggleOptionsFactory>;
-  useFactory?: (...args: any[]) => Promise<FeatureToggleModuleOptions> | FeatureToggleModuleOptions;
+  useFactory?: (
+    ...args: any[]
+  ) => Promise<FeatureToggleModuleOptions> | FeatureToggleModuleOptions;
   inject?: any[];
 }
