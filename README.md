@@ -4,9 +4,7 @@
 
 <a href="https://www.npmjs.com/package/@rafaelortegabueno/nestjs-feature-toggle" target="_blank"><img src="https://img.shields.io/npm/v/@rafaelortegabueno/nestjs-feature-toggle.svg" alt="NPM Version" /></a>
 <a href="https://www.npmjs.com/package/@rafaelortegabueno/nestjs-feature-toggle" target="_blank"><img src="https://img.shields.io/npm/l/@rafaelortegabueno/nestjs-feature-toggle.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/package/@rafaelortegabueno/nestjs-feature-toggle" target="_blank"><img src="https://img.shields.io/npm/dm/@rafaelortegabueno/nestjs-feature-toggle.svg" alt="NPM Downloads" /></a>
-
-[![codecov](https://codecov.io/gh/rorteg/nestjs-feature-toggle/branch/master/graph/badge.svg?token=yZ3N9q9p5L)](https://codecov.io/gh/rorteg/nestjs-feature-toggle)
+<a href="https://www.npmjs.com/package/@rafaelortegabueno/nestjs-feature-toggle" target="_blank"><img src="https://img.shields.io/npm/dm/@rafaelortegabueno/nestjs-feature-toggle.svg" alt="NPM Downloads" /></a> [![codecov](https://codecov.io/gh/rorteg/nestjs-feature-toggle/branch/master/graph/badge.svg?token=yZ3N9q9p5L)](https://codecov.io/gh/rorteg/nestjs-feature-toggle)
 
 ## Description
 
