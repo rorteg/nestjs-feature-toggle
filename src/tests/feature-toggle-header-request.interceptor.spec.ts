@@ -43,13 +43,7 @@ describe('FeatureToggleHeaderRequestInterceptor', () => {
                 enabled: true,
                 keywordToBeSearchedInHeader: 'feature_'
               },
-              featureSettings: [
-                {
-                  name: 'FEATURE_TEST',
-                  value: false,
-                  acceptHttpRequestContext: true
-                }
-              ]
+              featureSettings: []
             });
           },
           scope: Scope.REQUEST

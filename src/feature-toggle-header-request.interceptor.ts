@@ -5,8 +5,8 @@ import {
   NestInterceptor
 } from '@nestjs/common';
 import { Observable } from 'rxjs';
-import { FeatureToggleService } from './.';
-import { FeatureEntity } from './.';
+import { FeatureToggleService } from './feature-toggle.service';
+import { FeatureEntity } from './entities';
 
 @Injectable()
 export class FeatureToggleHeaderRequestInterceptor implements NestInterceptor {
@@ -21,6 +21,11 @@ export class FeatureToggleHeaderRequestInterceptor implements NestInterceptor {
 
     const headers = context.switchToHttp().getRequest().headers;
     const features = await this.featureToggleService.getFeatures();
+
+    if (!features?.length) {
+      return next.handle();
+    }
+
     Object.keys(headers)
       .filter((key) =>
         key.includes(

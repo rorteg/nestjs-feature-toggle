@@ -4,4 +4,3 @@ export * from './feature-toggle.constants';
 export * from './feature-toggle.module';
 export * from './feature-toggle.providers';
 export * from './feature-toggle.service';
-export * from './feature-toggle-header-request.interceptor';
