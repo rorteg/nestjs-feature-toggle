@@ -1,4 +1,4 @@
-import FeatureInterface from "./feature.interface";
+import FeatureInterface from './feature.interface';
 
 interface FeatureToggleServiceInterface {
   getFeature(featureName: string): Promise<FeatureInterface> | null;

@@ -1,11 +1,10 @@
-import { FeatureToggleConfigDataSource } from "./dataSources/feature-toggle-config.data-source";
-import { DataSourceEnum, FeatureToggleModuleOptions } from "./interfaces";
+import { FeatureToggleConfigDataSource } from './dataSources/feature-toggle-config.data-source';
+import { DataSourceEnum, FeatureToggleModuleOptions } from './interfaces';
 
 export class FeatureToggleDataSourceFactory {
   private options: FeatureToggleModuleOptions;
 
-  constructor(options: FeatureToggleModuleOptions)
-  {
+  constructor(options: FeatureToggleModuleOptions) {
     this.options = options;
   }
   create(dataSourceType: DataSourceEnum) {

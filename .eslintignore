@@ -1,2 +1,2 @@
 tests/**
-lib/**/*.spec.ts
+src/**/*.spec.ts

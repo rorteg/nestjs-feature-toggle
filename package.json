@@ -1,12 +1,12 @@
 {
   "name": "@rafaelortegabueno/nestjs-feature-toggle",
-  "version": "1.0.15",
+  "version": "1.0.17",
   "description": "Nest - modern, fast, powerful node.js web framework (@jwt)",
   "author": "Rafael Ortega Bueno",
   "license": "MIT",
   "scripts": {
     "format": "prettier --write \"**/*.ts\"",
-    "lint": "eslint \"lib/**/*.ts\" --fix",
+    "lint": "eslint \"src/**/*.ts\" --fix",
     "test": "jest --config=jest.json",
     "test:watch": "jest --config=jest.json --watch",
     "test:coverage": "jest --config=jest.json --coverage --coverageDirectory=coverage",

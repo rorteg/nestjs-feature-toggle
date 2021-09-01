@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { FeatureToggleHeaderRequestInterceptor } from './feature-toggle-header-request.interceptor';
-import { FEATURE_TOGGLE_MODULE_OPTIONS } from './feature-toggle.constants';
-import { FeatureToggleService } from './feature-toggle.service';
+import { FeatureToggleHeaderRequestInterceptor } from '../feature-toggle-header-request.interceptor';
+import { FEATURE_TOGGLE_MODULE_OPTIONS } from '../feature-toggle.constants';
+import { FeatureToggleService } from '../feature-toggle.service';
 
 describe('FeatureToggleHeaderRequestInterceptor', () => {
   let app: TestingModule;

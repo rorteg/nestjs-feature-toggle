@@ -1,16 +1,17 @@
-import FeatureInterface from "../interfaces/feature.interface";
+import FeatureInterface from '../interfaces/feature.interface';
 
 export class FeatureEntity implements FeatureInterface {
   private acceptHTTPRequestContext: boolean;
   private name: string;
   private value: boolean;
 
-
   isEnabled(): boolean {
     return this.value;
   }
 
-  setAcceptHTTPRequestContext(acceptHTTPRequestContext: boolean): FeatureEntity {
+  setAcceptHTTPRequestContext(
+    acceptHTTPRequestContext: boolean
+  ): FeatureEntity {
     this.acceptHTTPRequestContext = acceptHTTPRequestContext;
     return this;
   }
@@ -36,5 +37,4 @@ export class FeatureEntity implements FeatureInterface {
   getValue(): boolean {
     return this.value;
   }
-
 }

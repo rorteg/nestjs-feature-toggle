@@ -3,9 +3,9 @@
   "transform": {
     "^.+\\.tsx?$": "ts-jest"
   },
-  "testRegex": "/lib/.*\\.(test|spec).(ts|tsx|js)$",
+  "testRegex": "/src/.*\\.(test|spec).(ts|tsx|js)$",
   "collectCoverageFrom": [
-    "lib/**/*.{js,jsx,tsx,ts}",
+    "src/**/*.{js,jsx,tsx,ts}",
     "!**/node_modules/**",
     "!**/vendor/**"
   ],

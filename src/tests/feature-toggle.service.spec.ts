@@ -2,9 +2,9 @@ import { Test } from '@nestjs/testing';
 import {
   DataSourceEnum,
   FeatureToggleModuleOptions
-} from './interfaces/feature-toggle-module-options.interface';
-import { FeatureToggleModule } from './feature-toggle.module';
-import { FeatureToggleService } from './feature-toggle.service';
+} from '../interfaces/feature-toggle-module-options.interface';
+import { FeatureToggleModule } from '../feature-toggle.module';
+import { FeatureToggleService } from '../feature-toggle.service';
 
 const setup = async (config: FeatureToggleModuleOptions) => {
   const module = await Test.createTestingModule({
