@@ -1,0 +1,16 @@
+name: "Test Coverage"
+
+on:
+  push:
+    branches: [ master ]
+jobs:
+  test-coverage:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [14.x]
+    steps:
+      - uses: actions/checkout@master
+      - uses: codecov/codecov-action@v2
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
