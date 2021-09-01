@@ -18,8 +18,12 @@ jobs:
         
       - name: npm install
         run: npm ci
+
+      - name: Run tests
+        run: npm run test:coverage
       
       - uses: codecov/codecov-action@v2
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
+          directory: ./coverage
           
