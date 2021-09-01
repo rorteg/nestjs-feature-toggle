@@ -17,7 +17,8 @@ const setup = async (config: FeatureToggleModuleOptions) => {
 const config: FeatureToggleModuleOptions = {
   dataSource: DataSourceEnum.MODULE_CONFIG,
   httpRequestContext: {
-    keywordToBeSearchedInHeader: 'feature_'
+    keywordToBeSearchedInHeader: 'feature_',
+    enabled: true
   },
   featureSettings: [
     {
@@ -38,7 +39,11 @@ describe('Feature Toggle Service', () => {
       featureToggleService = await setup(config);
     });
 
-    it('', async () => {
+    it('should be defined', () => {
+      expect(featureToggleService).toBeDefined();
+    });
+
+    it('Should not break if the feature does not exist', async () => {
       let feature = await featureToggleService.getFeature('NOT_EXISTS');
       expect(feature).toBeUndefined();
     });

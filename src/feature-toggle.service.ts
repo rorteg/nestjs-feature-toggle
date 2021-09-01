@@ -10,7 +10,7 @@ import FeatureInterface from './interfaces/feature.interface';
 @Injectable({ scope: Scope.REQUEST })
 export class FeatureToggleService implements FeatureToggleServiceInterface {
   private readonly logger = new Logger('FeatureToggleService');
-  private features: FeatureInterface[] | null;
+  private features: FeatureEntity[] | null;
   private repository: FeatureToggleRepositoryInterface;
 
   constructor(
@@ -20,12 +20,22 @@ export class FeatureToggleService implements FeatureToggleServiceInterface {
     this.repository = new FeatureToggleRepository(this.options);
   }
 
-  async getFeature(featureName: string): Promise<FeatureInterface> | null {
+  async getFeatures(): Promise<FeatureEntity[]> | null {
     if (!this.features) {
-      this.features = await this.repository.getFeatures();
+      this.features = (await this.repository.getFeatures()) as FeatureEntity[];
     }
 
-    return this.features?.length
+    return this.features;
+  }
+
+  setFeatures(features: FeatureEntity[]): FeatureToggleService {
+    this.features = features;
+    return this;
+  }
+
+  async getFeature(featureName: string): Promise<FeatureInterface> | null {
+    const features = await this.getFeatures();
+    return features?.length
       ? this.features.filter(
           (feature: FeatureEntity) => featureName === feature.getName()
         )[0]
