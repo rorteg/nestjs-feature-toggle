@@ -21,6 +21,7 @@ on:
     - cron: '32 9 * * 1'
 
 jobs:
+
   analyze:
     name: Analyze
     runs-on: ubuntu-latest
