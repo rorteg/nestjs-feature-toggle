@@ -26,27 +26,11 @@ export class FeatureToggleHeaderRequestInterceptor implements NestInterceptor {
       return next.handle();
     }
 
-    Object.keys(headers)
-      .filter((key) =>
-        key.includes(
-          this.featureToggleService.getHttpContextConfig()
-            ?.keywordToBeSearchedInHeader ?? 'feature_'
-        )
-      )
-      .forEach(async (key) => {
-        const feature: FeatureEntity = features.filter(
-          (feature: FeatureEntity) => {
-            return feature.getName() === key.toUpperCase();
-          }
-        )[0];
-
-        if (
-          typeof feature !== 'undefined' &&
-          feature.isAcceptHTTPRequestContext()
-        ) {
-          feature.setValue(!!parseInt(headers[key] as string));
-        }
-      });
+    FeatureToggleService.setFeaturesFromHeader(
+      headers,
+      features,
+      this.featureToggleService.getHttpContextConfig()
+    );
 
     return next.handle();
   }
