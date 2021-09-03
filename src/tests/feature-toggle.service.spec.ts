@@ -5,6 +5,7 @@ import {
 } from '../interfaces/feature-toggle-module-options.interface';
 import { FeatureToggleModule } from '../feature-toggle.module';
 import { FeatureToggleService } from '../feature-toggle.service';
+import { ExecutionContext } from '@nestjs/common';
 
 const setup = async (config: FeatureToggleModuleOptions) => {
   const module = await Test.createTestingModule({
@@ -30,6 +31,25 @@ const config: FeatureToggleModuleOptions = {
       value: false
     }
   ]
+};
+
+const executionContext: ExecutionContext = {
+  switchToHttp: jest.fn(() => ({
+    getRequest: jest.fn().mockReturnValue({
+      headers: {
+        [config.featureSettings[0].name]: '1'
+      }
+    }),
+    getNext: jest.fn().mockReturnThis(),
+    getResponse: jest.fn().mockReturnThis()
+  })),
+  getClass: jest.fn().mockReturnThis(),
+  getHandler: jest.fn().mockReturnThis(),
+  getArgs: jest.fn().mockReturnThis(),
+  getArgByIndex: jest.fn().mockReturnThis(),
+  switchToRpc: jest.fn().mockReturnThis(),
+  switchToWs: jest.fn().mockReturnThis(),
+  getType: jest.fn().mockReturnThis()
 };
 
 describe('Feature Toggle Service', () => {
@@ -73,6 +93,14 @@ describe('Feature Toggle Service', () => {
       expect(
         featureToggleService.getHttpContextConfig()?.keywordToBeSearchedInHeader
       ).toBe(config.httpRequestContext.keywordToBeSearchedInHeader);
+    });
+
+    it('Should check if a feature is enabled by the configuration and context', async () => {
+      let feature = await featureToggleService.getFeature(
+        config.featureSettings[0].name,
+        executionContext
+      );
+      expect(feature.isEnabled()).toBeTruthy()
     });
   });
 });

@@ -1,4 +1,10 @@
-import { Inject, Injectable, Logger, Scope } from '@nestjs/common';
+import {
+  ExecutionContext,
+  Inject,
+  Injectable,
+  Logger,
+  Scope
+} from '@nestjs/common';
 import { FeatureEntity } from './entities/FeatureEntity';
 import { FEATURE_TOGGLE_MODULE_OPTIONS } from './feature-toggle.constants';
 import { FeatureToggleRepository } from './feature-toggle.repository';
@@ -33,22 +39,64 @@ export class FeatureToggleService implements FeatureToggleServiceInterface {
     return this;
   }
 
-  async getFeature(featureName: string): Promise<FeatureInterface> | null {
-    const features = await this.getFeatures();
-    return features?.length
-      ? this.features.filter(
-          (feature: FeatureEntity) => featureName === feature.getName()
-        )[0]
-      : null;
+  async getFeature(
+    featureName: string,
+    context?: ExecutionContext
+  ): Promise<FeatureInterface> | null {
+    const features = (await this.getFeatures()) ?? null;
+    if (!features) return null;
+
+    if (context) {
+      const httpRequestConfig = this.getHttpContextConfig();
+      const headers = context.switchToHttp().getRequest().headers;
+      FeatureToggleService.setFeaturesFromHeader(
+        headers,
+        features,
+        httpRequestConfig
+      );
+    }
+
+    const foundFeature = this.features.find(
+      (feature: FeatureEntity) => featureName === feature.getName()
+    );
+
+    return foundFeature;
   }
 
-  async isFeatureEnabled(featureName: string): Promise<boolean> | null {
-    return (await this.getFeature(featureName))
-      ? (await this.getFeature(featureName)).isEnabled()
-      : null;
+  async isFeatureEnabled(
+    featureName: string,
+    context?: ExecutionContext
+  ): Promise<boolean> | null {
+    const feature = await this.getFeature(featureName, context);
+    return feature ? feature.isEnabled() : null;
   }
 
   getHttpContextConfig(): HttpRequestContext {
     return this.options.httpRequestContext;
+  }
+
+  static setFeaturesFromHeader<T>(
+    headers: T,
+    features: FeatureEntity[],
+    httpRequestConfig?: HttpRequestContext
+  ): void {
+    const headersKeys = Object.keys(headers).filter((key) =>
+      key.includes(httpRequestConfig?.keywordToBeSearchedInHeader ?? 'feature_')
+    );
+
+    const findFeatureByKey = (headersKey: string) => {
+      return features.find((feature: FeatureEntity) => {
+        return feature.getName().toUpperCase() === headersKey.toUpperCase();
+      });
+    };
+
+    headersKeys.forEach((headersKey) => {
+      const feature: FeatureEntity = findFeatureByKey(headersKey);
+
+      if (feature?.isAcceptHTTPRequestContext()) {
+        const keyValue = headers[headersKey];
+        feature.setValue(!!parseInt(keyValue));
+      }
+    });
   }
 }
