@@ -10,7 +10,7 @@
     "test": "jest --config=jest.json",
     "test:watch": "jest --config=jest.json --watch",
     "test:coverage": "jest --config=jest.json --coverage --coverageDirectory=coverage",
-    "build": "rm -rf dist && tsc -p tsconfig.json",
+    "build": "rm -rf dist && tsc -p tsconfig.build.json",
     "precommit": "lint-staged",
     "prepublish:npm": "npm run build",
     "publish:npm": "npm publish --access public",
