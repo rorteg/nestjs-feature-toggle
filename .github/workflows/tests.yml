@@ -1,32 +1,31 @@
-name: "Continuous Integration Test"
+name: "Tests"
 
-on:
-  push:
-    branches: [ master ]
-  pull_request:
-    # The branches below must be a subset of the branches above
-    branches: [ master ]
+on: [push, pull_request]
+env:
+  CI: true
+
 jobs:
-  unit-tests:
+  build:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [14.x]
     steps:
       - uses: actions/checkout@v2
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
+
+      - name: Use Node.js
+        uses: actions/setup-node@v2
         with:
-          node-version: ${{ matrix.node-version }}
-        
-      - name: npm install
-        run: npm ci
+          node-version: "14.x"
 
-      - name: build package
-        run: npm run build
+      - name: Install dependencies
+        run: npn ci
 
-      - name: Run tests
+      - name: Run lint
+        run: npm run lint
+
+      - name: Run Tests
         run: npm run test
 
       - name: Jest coverage report
-        uses: ArtiomTr/jest-coverage-report-action@v2.0-rc.4
+      - uses: artiomtr/jest-coverage-report-action@v2.0-rc.1
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          test-script: npm run test:coverage
