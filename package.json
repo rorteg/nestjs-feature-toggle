@@ -1,6 +1,6 @@
 {
   "name": "@rafaelortegabueno/nestjs-feature-toggle",
-  "version": "1.0.26",
+  "version": "1.0.0",
   "description": "Nest - modern, fast, powerful node.js web framework (@jwt)",
   "author": "Rafael Ortega Bueno",
   "license": "MIT",
@@ -10,6 +10,7 @@
     "test": "jest --config=jest.json",
     "test:watch": "jest --config=jest.json --watch",
     "test:coverage": "jest --config=jest.json --coverage --coverageDirectory=coverage",
+    "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "build": "rm -rf dist && tsc -p tsconfig.build.json",
     "precommit": "lint-staged",
     "prepublish:npm": "npm run build",
