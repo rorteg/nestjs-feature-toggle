@@ -132,6 +132,49 @@ httpRequestContext: {
 
 ---
 
+## Decorator
+
+Is possible to use a decorator instead of import feature toggle service.
+
+```typescript
+// app.module.ts
+
+@Module({
+  imports: [
+    FeatureToggleModule.register({
+      dataSource: DataSourceEnum.MODULE_CONFIG,
+      httpRequestContext: {
+        enabled: true,
+      },
+      featureSettings: [
+        {
+          name: 'FEATURE_TEST',
+          value: false,
+          acceptHttpRequestContext: true,
+        }
+      ]
+    })
+  ],
+  providers: [
+    {
+      provide: APP_GUARD,
+      useClass: FeatureToggleGuard,
+    },
+  ],
+})
+```
+
+```typescript
+// cat.controller.ts
+
+@Post()
+@FeatureEnabled('FEATURE_TEST')
+async create(@Body() createCatDto: CreateCatDto) {
+  this.catsService.create(createCatDto);
+}
+```
+---
+
 ## License
 
 [MIT licensed](LICENSE).
