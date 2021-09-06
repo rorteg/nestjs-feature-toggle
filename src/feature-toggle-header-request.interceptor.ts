@@ -6,7 +6,6 @@ import {
 } from '@nestjs/common';
 import { Observable } from 'rxjs';
 import { FeatureToggleService } from './feature-toggle.service';
-import { FeatureEntity } from './entities';
 
 @Injectable()
 export class FeatureToggleHeaderRequestInterceptor implements NestInterceptor {

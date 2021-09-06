@@ -22,7 +22,7 @@ export class FeatureToggleRepository
   }
 
   async getFeatures(): Promise<FeatureInterface[]> | null {
-    let features = await this.dataSource.getFeatures();
+    const features = await this.dataSource.getFeatures();
 
     if (!features.length) {
       return null;

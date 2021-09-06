@@ -1,22 +1,29 @@
-name: "Test Coverage"
+name: "Release"
 
 on:
   push:
-    branches: [ master ]
+    branches:
+      - master
+  workflow_run:
+    workflows: ["Tests"]
+    types: [completed]
+
 jobs:
-  test-coverage:
+  release:
     runs-on: ubuntu-latest
     strategy:
       matrix:
         node-version: [14.x]
+
     steps:
-      - uses: actions/checkout@master
+      - uses: actions/checkout@v2
+      
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
         
-      - name: npm install
+      - name: Install dependencies
         run: npm ci
 
       - name: Run tests
@@ -26,4 +33,12 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           directory: ./coverage
-          
+      
+      - name: Build
+        run: npm run build
+      
+      - name: Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
+        run: node ./node_modules/.bin/semantic-release
