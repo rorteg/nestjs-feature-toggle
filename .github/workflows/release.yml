@@ -10,7 +10,6 @@ on:
 
 jobs:
   release:
-    name: Release
     runs-on: ubuntu-18.04
 
     steps:
