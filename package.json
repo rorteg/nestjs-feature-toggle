@@ -9,7 +9,7 @@
     "lint": "eslint \"src/**/*.ts\" --fix",
     "test": "jest --config=jest.json",
     "test:watch": "jest --config=jest.json --watch",
-    "test:coverage": "jest --config=jest.json --silent --ci --coverage --coverageReporters='text' --coverageReporters='text-summary'",
+    "test:coverage": "jest --config=jest.json --testLocationInResults --colors --silent --ci --coverage --coverageReporters='text' --coverageReporters='text-summary' --json --outputFile=report.json",
     "build": "rm -rf dist && tsc -p tsconfig.build.json",
     "precommit": "lint-staged",
     "prepublish:npm": "npm run build",
