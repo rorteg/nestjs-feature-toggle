@@ -1,2 +1,2 @@
-tests/**
-src/**/*.spec.ts
+dist
+*.js
