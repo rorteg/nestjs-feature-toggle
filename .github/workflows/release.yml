@@ -5,7 +5,7 @@ on:
     branches:
       - master
   workflow_run:
-    workflows: ["Tests"]
+    workflows: ["End-to-End Tests"]
     types: [completed]
 
 jobs:
@@ -17,26 +17,26 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      
+
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
-        
+
       - name: Install dependencies
         run: npm ci
 
       - name: Run tests
         run: npm run test:coverage
-      
+
       - uses: codecov/codecov-action@v2
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           directory: ./coverage
-      
+
       - name: Build
         run: npm run build
-      
+
       - name: Release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
