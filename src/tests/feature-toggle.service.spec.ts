@@ -64,7 +64,7 @@ describe('Feature Toggle Service', () => {
     });
 
     it('Should not break if the feature does not exist', async () => {
-      let feature = await featureToggleService.getFeature('NOT_EXISTS');
+      const feature = await featureToggleService.getFeature('NOT_EXISTS');
       expect(feature).toBeUndefined();
     });
   });
@@ -76,14 +76,14 @@ describe('Feature Toggle Service', () => {
     });
 
     it('Should check if a feature is enabled by the configuration', async () => {
-      let feature = await featureToggleService.getFeature(
+      const feature = await featureToggleService.getFeature(
         config.featureSettings[0].name
       );
       expect(feature.isEnabled()).toBe(config.featureSettings[0].value);
     });
 
     it('Should check if a feature is not enabled by the configuration', async () => {
-      let feature = await featureToggleService.getFeature(
+      const feature = await featureToggleService.getFeature(
         config.featureSettings[1].name
       );
       expect(feature.isEnabled()).toBe(config.featureSettings[1].value);
@@ -96,11 +96,11 @@ describe('Feature Toggle Service', () => {
     });
 
     it('Should check if a feature is enabled by the configuration and context', async () => {
-      let feature = await featureToggleService.getFeature(
+      const feature = await featureToggleService.getFeature(
         config.featureSettings[0].name,
         executionContext
       );
-      expect(feature.isEnabled()).toBeTruthy()
+      expect(feature.isEnabled()).toBeTruthy();
     });
   });
 });

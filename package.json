@@ -17,7 +17,9 @@
     "publish:npm": "npm publish --access public",
     "prerelease": "npm run build",
     "release": "release-it",
-    "commit": "cz"
+    "start:dev": "nodemon  --exec ts-node --files e2e/src/main.ts",
+    "commit": "cz",
+    "test:e2e": "jest --config ./e2e/jest-e2e.json"
   },
   "peerDependencies": {
     "@nestjs/common": "^6.0.0 || ^7.0.0 || ^8.0.0"
@@ -26,7 +28,9 @@
     "@commitlint/cli": "13.1.0",
     "@commitlint/config-angular": "13.1.0",
     "@nestjs/common": "8.0.6",
-    "@nestjs/core": "8.0.6",
+    "@nestjs/core": "^8.0.6",
+    "@nestjs/platform-express": "^8.0.6",
+    "@nestjs/schematics": "^8.0.3",
     "@nestjs/testing": "^8.0.6",
     "@semantic-release/changelog": "^5.0.1",
     "@semantic-release/commit-analyzer": "^8.0.1",
@@ -37,6 +41,7 @@
     "@types/node": "14.17.12",
     "@typescript-eslint/eslint-plugin": "4.29.3",
     "@typescript-eslint/parser": "4.29.3",
+    "axios": "^0.21.1",
     "cz-conventional-changelog": "^3.3.0",
     "eslint": "7.32.0",
     "eslint-config-prettier": "8.3.0",
