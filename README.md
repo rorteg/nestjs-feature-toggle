@@ -1,21 +1,16 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo_text.svg" width="320" alt="Nest Logo" /></a>
-</p>
+# NestJS Feature Toggle
+
+Dynamic NestJS module to work with [feature toggles](https://martinfowler.com/articles/feature-toggles.html) with ease.
 
 <a href="https://www.npmjs.com/package/@rafaelortegabueno/nestjs-feature-toggle" target="_blank"><img src="https://img.shields.io/npm/v/@rafaelortegabueno/nestjs-feature-toggle.svg" alt="NPM Version" /></a>
 <a href="https://www.npmjs.com/package/@rafaelortegabueno/nestjs-feature-toggle" target="_blank"><img src="https://img.shields.io/npm/l/@rafaelortegabueno/nestjs-feature-toggle.svg" alt="Package License" /></a>
 <a href="https://www.npmjs.com/package/@rafaelortegabueno/nestjs-feature-toggle" target="_blank"><img src="https://img.shields.io/npm/dm/@rafaelortegabueno/nestjs-feature-toggle.svg" alt="NPM Downloads" /></a> [![codecov](https://codecov.io/gh/rorteg/nestjs-feature-toggle/branch/master/graph/badge.svg?token=yZ3N9q9p5L)](https://codecov.io/gh/rorteg/nestjs-feature-toggle)
 
-## Description
-
-Dynamic NestJS module that provides facilities in working with [Feature Toggles](https://martinfowler.com/articles/feature-toggles.html).
-
-This module was built in order to facilitate the implementation of feature management tools without compromising their use in projects.
-
 ## Features
 
-- Feature Toggles settings via module configuration
-- Possibility of enabling features via HTTP request header
+- Create and configure feature toggles via module configuration;
+- Enable and disable feature toggles in a single HTTP request using its headers;
+- Use your feature toggles by injecting a provider or via TypeScript Decorators.
 
 ## Installation
 
@@ -25,7 +20,7 @@ $ npm i --save @rafaelortegabueno/nestjs-feature-toggle
 
 ## Quick Start
 
-Register the Module settings in your application:
+Import and configure the module in your application:
 
 ```typescript
 // app.module.ts
@@ -44,46 +39,47 @@ import {
 })
 ```
 
-To work with a new feature, just add it in the settings:
+Add your feature toggles to the `featureSettings` array:
 
 ```typescript
 // app.module.ts
 
-featureSettings: [{
+featureSettings: [
   {
-    name: 'FEATURE_TEST',
+    name: 'YOUR_FEATURE_TOGGLE',
     value: false
   }
-}]
+]
 ```
 
-In the implementation of your feature, just inject the FeatureToggleService in your constructor and use the "isFeatureEnabled()" method.
+Inject the `FeatureToggleService` in your class constructor and use `isFeatureEnabled()` 
+to assert the value of your feature togggles.
 
 ```typescript
+// class.ts
 export class Class {
   constructor(
     private readonly featureToggleService: FeatureToggleService
   ) {}
 
-  async method() {
-    if(await this.featureToggleService.isFeatureEnabled('FEATURE_TEST')) {
-      return 'FEATURE TEST IMPLEMENTED!'
+  async method(): Promise<string> {
+    if (await this.featureToggleService.isFeatureEnabled('YOUR_FEATURE_TOGGLE')) {
+      return 'YOUR_FEATURE_TOGGLE is enabled!'
     }
-
-    return 'FEATURE TEST NOT IMPLEMENTED!';
+    
+    return 'YOUR_FEATURE_TOGGLE is disabled!';
   }
 }
 ```
-
 ---
+## Request scoped feature toggles
 
-## Enabling features via HTTP request header
+Request scoped feature toggles allows testing a new feature without changing environment variables or 
+modifying the `featureSettings` array, so we don't need to deploy the application in order to enable or disable a feature toggle.
 
-You might want to test a feature in production without affecting the environment. For this, the possibility of enabling a feature through HTTP request headers was implemented.
+>Notice: Request scoped feature toggles are disabled by default. It uses the request interceptor, which can cause a small performance loss.
 
-*Note: This feature is disabled by default, as it uses a request interceptor which can cause a small performance loss.*
-
-To enable it, add the configuration in your application:
+To enable request scoped feature toggles, add the following configuration in your module seetings:
 
 ```typescript
 // app.module.ts
@@ -97,7 +93,7 @@ To enable it, add the configuration in your application:
       },
       featureSettings: [
         {
-          name: 'FEATURE_TEST',
+          name: 'YOUR_FEATURE_TOGGLE',
           value: false,
           acceptHttpRequestContext: true,
         }
@@ -106,36 +102,38 @@ To enable it, add the configuration in your application:
   ]
 })
 ```
+> Notice: It is necessary to set `acceptHttpRequestContext` to `true` in each request scoped feature toggle.
 
-Note that it is necessary to enable the functionality so that it is possible to process the configured features, but it is necessary to specify in each feature whether it is allowed to change it via HTTP request.
-
-To enable the FEATURE_TEST feature via request, just send in the header:
-
+### Enable/disable a request scoped feature toggle 
+Add the feature toggle to the headers section of your request with the `feature_` prefix:
 ```text
-feature_test = 1
+feature_YOUR_FEATURE_TOGGLE = 1
 ```
 
-The value sent in the header will overwrite the configured value and will be valid only for the request in question.
+The feature toggle values sent in the headers section will overwrite the previously configured values (at the module settings) only in the
+current request. Any other requests (without the headers keys) are going to use the module settings values.
 
-*Note: the interceptor searches by default for the string 'feature_' in the header keys.*
+> Notice: The request interceptor searches for the string `feature_` by default. However, it is possible to set a custom
+> prefix.
 
-It is possible to configure a custom string:
+To set a custom feature toggle prefix, add the following configuration to the `httpRequestContext` key:
 
 ```typescript
 // app.module.ts
 
 httpRequestContext: {
   enabled: true,
-  keywordToBeSearchedInHeader: 'feature_',
+  keywordToBeSearchedInHeader: 'custom_prefix_',
 }
 ```
-
 ---
 
-## Decorator
+## Enable/disable feature toggles with TypeScript Decorators
 
-Is possible to use a decorator instead of import feature toggle service.
+It is also possible to use TypeScript Decorators to enable/disable feature toggles without 
+injecting the `FeatureToggleService` provider. It is specially useful to enabling/disabling access to a whole endpoint, for instance.
 
+To do so, add the `FeatureToggleGuard` to your module configuration:
 ```typescript
 // app.module.ts
 
@@ -143,14 +141,10 @@ Is possible to use a decorator instead of import feature toggle service.
   imports: [
     FeatureToggleModule.register({
       dataSource: DataSourceEnum.MODULE_CONFIG,
-      httpRequestContext: {
-        enabled: true,
-      },
       featureSettings: [
         {
-          name: 'FEATURE_TEST',
-          value: false,
-          acceptHttpRequestContext: true,
+          name: 'ALLOW_CAT_CREATION',
+          value: true,
         }
       ]
     })
@@ -163,18 +157,18 @@ Is possible to use a decorator instead of import feature toggle service.
   ],
 })
 ```
+Then use the `FeatureEnabled` decorator to assert the feature toggle value.
 
 ```typescript
 // cat.controller.ts
 
 @Post()
-@FeatureEnabled('FEATURE_TEST')
+@FeatureEnabled('ALLOW_CAT_CREATION')
 async create(@Body() createCatDto: CreateCatDto) {
   this.catsService.create(createCatDto);
 }
 ```
 ---
-
 ## License
 
 [MIT licensed](LICENSE).
