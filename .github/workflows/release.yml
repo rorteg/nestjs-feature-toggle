@@ -1,4 +1,4 @@
-name: "Release"
+name: "Release & Publish to NPM"
 
 on:
   push:
@@ -37,8 +37,19 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Release
+      - name: Initialize Git User
+        run: |
+            git config --global user.email "rorteg@gmail.com"
+            git config --global user.name "Release Workflow"
+
+      - name: Initialize the NPM config
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
+        run: npm config set //registry.npmjs.org/:_authToken $NPM_TOKEN
+        
+      - name: Release and Publish
+        run: npm run release --ci
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
-        run: node ./node_modules/.bin/semantic-release
+       #run: node ./node_modules/.bin/semantic-release
