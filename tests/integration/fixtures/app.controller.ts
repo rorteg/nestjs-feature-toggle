@@ -1,5 +1,5 @@
 import { Controller, Get } from '@nestjs/common';
-import { FeatureEnabled, FeatureToggleService } from '../../src';
+import { FeatureEnabled, FeatureToggleService } from '../../../src';
 
 @Controller()
 export class AppController {

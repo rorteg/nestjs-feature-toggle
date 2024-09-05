@@ -1,13 +1,15 @@
 {
   "moduleFileExtensions": ["ts", "tsx", "js", "json"],
+  "testEnvironment": "node",
   "transform": {
     "^.+\\.tsx?$": "ts-jest"
   },
-  "testRegex": "/src/.*\\.(test|spec).(ts|tsx|js)$",
+  "testRegex": "(/src/.*\\.(test|spec)\\.(ts|tsx|js)$|/tests/integration/.*\\.integration-spec\\.ts$)",
   "collectCoverageFrom": [
     "src/**/*.{js,jsx,tsx,ts}",
     "!**/node_modules/**",
     "!**/vendor/**"
   ],
-  "coverageReporters": ["json", "lcov"]
+  "coverageReporters": ["json", "lcov"],
+  "verbose": true
 }

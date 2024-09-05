@@ -153,6 +153,7 @@ To do so, add the `FeatureToggleGuard` to your module configuration:
     {
       provide: APP_GUARD,
       useClass: FeatureToggleGuard,
+      scope: Scope.REQUEST,
     },
   ],
 })
