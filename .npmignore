@@ -1,7 +1,7 @@
 docs
 __mocks__
 __tests__
-e2e
+tests
 nest-cli.json
 .*
 *.old

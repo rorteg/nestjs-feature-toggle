@@ -4,7 +4,7 @@
       "node_modules",
       "__tests__",
       "**/__snapshots__",
-      "e2e",
+      "tests",
       "test",
       "src/testing",
       "dist",

@@ -13,6 +13,6 @@
     "rootDir": ".",
     "skipLibCheck": true
   },
-  "include": ["src/**/*", "e2e/**/*"],
+  "include": ["src/**/*", "tests/integration/**/*"],
   "exclude": ["node_modules", "dist"]
 }
