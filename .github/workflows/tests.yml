@@ -7,13 +7,15 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [14.x]
+        # Altere para a versão mais recente (ex: 'lts/*', '20.x', ou '21.x')
+        node-version: [lts/*] 
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4 # É bom atualizar para a última versão aqui também, se possível
 
       - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
+        # Altere para a versão 4 (ou a mais recente) da ação setup-node
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
 
@@ -27,7 +29,8 @@ jobs:
         run: npm run test
 
       - name: Jest coverage report
-        uses: artiomtr/jest-coverage-report-action@v2.0-rc.1
+        # Mantenha ou atualize esta ação conforme necessário
+        uses: artiomtr/jest-coverage-report-action@v2.0-rc.1 
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           test-script: npx jest --config=jest.json --testLocationInResults --colors --silent --ci --coverage --coverageReporters='text' --coverageReporters='text-summary' --json --outputFile=report.json
