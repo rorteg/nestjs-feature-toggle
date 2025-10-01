@@ -10,9 +10,7 @@ export class FeatureToggleGuard implements CanActivate {
     private featureToggleService: FeatureToggleService
   ) {}
 
-  async canActivate(
-    context: ExecutionContext
-  ): Promise<boolean> {
+  async canActivate(context: ExecutionContext): Promise<boolean> {
     const featureKey = this.reflector.get<string>(
       FEATURE_TOGGLE_DECORATOR_KEY,
       context.getHandler()
@@ -20,6 +18,9 @@ export class FeatureToggleGuard implements CanActivate {
     if (!featureKey) {
       return true;
     }
-    return await this.featureToggleService.isFeatureEnabled(featureKey, context);
+    return await this.featureToggleService.isFeatureEnabled(
+      featureKey,
+      context
+    );
   }
 }

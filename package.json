@@ -4,6 +4,7 @@
   "description": "Nest - modern, fast, powerful node.js web framework (@jwt)",
   "author": "Rafael Ortega Bueno",
   "license": "MIT",
+  "type": "module",
   "scripts": {
     "format": "prettier --write \"**/*.ts\"",
     "lint": "eslint \"src/**/*.ts\" --fix",
@@ -25,6 +26,7 @@
   "devDependencies": {
     "@commitlint/cli": "^20.1.0",
     "@commitlint/config-angular": "^20.0.0",
+    "@eslint/js": "^9.36.0",
     "@nestjs/common": "^11.1.6",
     "@nestjs/core": "^11.1.6",
     "@nestjs/platform-express": "^11.1.6",
@@ -45,6 +47,7 @@
     "eslint-config-prettier": "10.1.8",
     "eslint-plugin-import": "2.32.0",
     "eslint-plugin-prettier": "^5.5.4",
+    "globals": "^16.4.0",
     "husky": "9.1.7",
     "jest": "30.2.0",
     "lint-staged": "16.2.3",
@@ -55,7 +58,8 @@
     "semantic-release": "^24.2.9",
     "supertest": "^7.1.4",
     "ts-jest": "29.4.4",
-    "typescript": "5.9.3"
+    "typescript": "5.9.3",
+    "typescript-eslint": "^8.45.0"
   },
   "dependencies": {
     "@types/express": "^5.0.3",
