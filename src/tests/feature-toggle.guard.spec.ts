@@ -65,7 +65,7 @@ describe('FeatureToggleGuard', () => {
     const result = await guard.canActivate(context);
 
     expect(result).toBeTruthy();
-    expect(reflector.get).toBeCalledTimes(1);
+    expect(reflector.get).toHaveBeenCalledTimes(1);
   });
 
   it('should return false if the `Feature` decorator is set but the feature is disable', async () => {
@@ -80,7 +80,7 @@ describe('FeatureToggleGuard', () => {
 
     const result = await guard.canActivate(context);
     expect(result).toBeFalsy();
-    expect(reflector.get).toBeCalledTimes(1);
+    expect(reflector.get).toHaveBeenCalledTimes(1);
   });
 
   it('should return true if the `Feature` decorator is set but the feature is enable', async () => {
@@ -95,6 +95,6 @@ describe('FeatureToggleGuard', () => {
 
     const result = await guard.canActivate(context);
     expect(result).toBeTruthy();
-    expect(reflector.get).toBeCalledTimes(1);
+    expect(reflector.get).toHaveBeenCalledTimes(1);
   });
 });
