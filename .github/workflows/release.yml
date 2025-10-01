@@ -13,13 +13,14 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [14.x]
+        node-version: [lts/*]
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4 # É bom atualizar para a última versão aqui também, se possível
 
       - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
+        # Altere para a versão 4 (ou a mais recente) da ação setup-node
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
 
