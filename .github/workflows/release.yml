@@ -54,3 +54,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
        #run: node ./node_modules/.bin/semantic-release
+
+      - name: Auto-Merge Release PR
+        uses: pascalgn/automerge-action@v0.15.2 # Versão estável
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
