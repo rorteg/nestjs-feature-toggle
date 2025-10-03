@@ -4,7 +4,7 @@ import { FeatureToggleDataSourceInterface } from '../interfaces/feature-toggle.d
 export class FeatureToggleConfigDataSource
   implements FeatureToggleDataSourceInterface
 {
-  private options: FeatureToggleModuleOptions;
+  private readonly options: FeatureToggleModuleOptions;
 
   constructor(options: FeatureToggleModuleOptions) {
     this.options = options;
@@ -19,6 +19,6 @@ export class FeatureToggleConfigDataSource
         };
       }) || [];
 
-    return await new Promise((resolve) => resolve(featureData));
+    return await Promise.resolve(featureData);
   }
 }

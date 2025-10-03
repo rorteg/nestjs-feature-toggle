@@ -9,7 +9,7 @@ import { FeatureToggleService } from './feature-toggle.service';
 
 @Injectable()
 export class FeatureToggleHeaderRequestInterceptor implements NestInterceptor {
-  constructor(private featureToggleService: FeatureToggleService) {}
+  constructor(private readonly featureToggleService: FeatureToggleService) {}
   async intercept(
     context: ExecutionContext,
     next: CallHandler

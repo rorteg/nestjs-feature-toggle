@@ -9,9 +9,7 @@ export class FeatureEntity implements FeatureInterface {
     return this.value;
   }
 
-  setAcceptHTTPRequestContext(
-    acceptHTTPRequestContext: boolean
-  ): FeatureEntity {
+  setAcceptHTTPRequestContext(acceptHTTPRequestContext: boolean): this {
     this.acceptHTTPRequestContext = acceptHTTPRequestContext;
     return this;
   }
@@ -20,7 +18,7 @@ export class FeatureEntity implements FeatureInterface {
     return this.acceptHTTPRequestContext;
   }
 
-  setName(name: string): FeatureEntity {
+  setName(name: string): this {
     this.name = name;
     return this;
   }
@@ -29,7 +27,7 @@ export class FeatureEntity implements FeatureInterface {
     return this.name;
   }
 
-  setValue(value: boolean): FeatureEntity {
+  setValue(value: boolean): this {
     this.value = value;
     return this;
   }

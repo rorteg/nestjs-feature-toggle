@@ -10,8 +10,8 @@ import FeatureInterface from './interfaces/feature.interface';
 export class FeatureToggleRepository
   implements FeatureToggleRepositoryInterface
 {
-  private dataSource: FeatureToggleDataSourceInterface;
-  private options: FeatureToggleModuleOptions;
+  private readonly dataSource: FeatureToggleDataSourceInterface;
+  private readonly options: FeatureToggleModuleOptions;
   private readonly logger = new Logger('FeatureToggleRepository');
 
   constructor(options: FeatureToggleModuleOptions) {

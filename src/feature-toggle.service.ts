@@ -10,7 +10,7 @@ import FeatureInterface from './interfaces/feature.interface';
 @Injectable({ scope: Scope.REQUEST })
 export class FeatureToggleService implements FeatureToggleServiceInterface {
   private features: FeatureEntity[] | null;
-  private repository: FeatureToggleRepositoryInterface;
+  private readonly repository: FeatureToggleRepositoryInterface;
 
   constructor(
     @Inject(FEATURE_TOGGLE_MODULE_OPTIONS)
@@ -27,7 +27,7 @@ export class FeatureToggleService implements FeatureToggleServiceInterface {
     return this.features;
   }
 
-  setFeatures(features: FeatureEntity[]): FeatureToggleService {
+  setFeatures(features: FeatureEntity[]): this {
     this.features = features;
     return this;
   }

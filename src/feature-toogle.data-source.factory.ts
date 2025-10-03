@@ -2,7 +2,7 @@ import { FeatureToggleConfigDataSource } from './dataSources/feature-toggle-conf
 import { DataSourceEnum, FeatureToggleModuleOptions } from './interfaces';
 
 export class FeatureToggleDataSourceFactory {
-  private options: FeatureToggleModuleOptions;
+  private readonly options: FeatureToggleModuleOptions;
 
   constructor(options: FeatureToggleModuleOptions) {
     this.options = options;

@@ -1,5 +1,9 @@
 import { Module, Scope } from '@nestjs/common';
-import { DataSourceEnum, FeatureToggleGuard, FeatureToggleModule } from '../../../src';
+import {
+  DataSourceEnum,
+  FeatureToggleGuard,
+  FeatureToggleModule
+} from '../../../src';
 import { AppController } from './app.controller';
 import { APP_GUARD } from '@nestjs/core';
 
@@ -25,8 +29,8 @@ import { APP_GUARD } from '@nestjs/core';
     {
       provide: APP_GUARD,
       useClass: FeatureToggleGuard,
-      scope: Scope.REQUEST,
-    },
+      scope: Scope.REQUEST
+    }
   ],
   controllers: [AppController]
 })

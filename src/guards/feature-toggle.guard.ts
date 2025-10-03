@@ -6,8 +6,8 @@ import { FeatureToggleService } from '../feature-toggle.service';
 @Injectable()
 export class FeatureToggleGuard implements CanActivate {
   constructor(
-    private reflector: Reflector,
-    private featureToggleService: FeatureToggleService
+    private readonly reflector: Reflector,
+    private readonly featureToggleService: FeatureToggleService
   ) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
